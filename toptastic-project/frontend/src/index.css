@@ -1,0 +1,105 @@
+/* Import Pico CSS */
+@import "@picocss/pico";
+
+/* Import our modern styles */
+@import "./styles/modern-items.css";
+@import "./styles/enhancements.css";
+
+/* Custom styles for TopTastic */
+:root {
+  --pico-primary-500: #3b82f6;
+  --pico-primary-600: #2563eb;
+  --pico-primary-700: #1d4ed8;
+}
+
+/* Container customizations */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Custom button styles */
+.btn-primary {
+  background-color: var(--pico-primary-500);
+  border-color: var(--pico-primary-500);
+}
+
+.btn-primary:hover {
+  background-color: var(--pico-primary-600);
+  border-color: var(--pico-primary-600);
+}
+
+/* List item styles */
+.list-item {
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--pico-card-background-color);
+}
+
+.list-item:hover {
+  border-color: var(--pico-primary-500);
+}
+
+/* Like button styles */
+.like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: var(--pico-border-radius);
+  border: 1px solid var(--pico-muted-border-color);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  background-color: var(--pico-primary-100);
+  border-color: var(--pico-primary-500);
+}
+
+/* Loading and error states */
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error {
+  color: var(--pico-del-color);
+  padding: 1rem;
+  border: 1px solid var(--pico-del-color);
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-del-background-color);
+}
+
+/* Form styles */
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Header styles */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.header h1 {
+  margin-bottom: 0.5rem;
+  color: var(--pico-primary-600);
+}
+
+.header p {
+  color: var(--pico-muted-color);
+}

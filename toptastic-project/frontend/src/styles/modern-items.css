@@ -1,0 +1,306 @@
+/* ===== MODERN ITEM CARDS ===== */
+.modern-item-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 80px;
+  touch-action: none;
+}
+
+.modern-item-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--pico-primary-500);
+}
+
+.modern-item-card.dragging {
+  transform: rotate(2deg) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  background: color-mix(in srgb, var(--pico-card-background-color) 95%, var(--pico-primary-500) 5%);
+}
+
+.modern-item-card.gold-border {
+  border: 2px solid #ffd700;
+  background: linear-gradient(135deg, 
+    var(--pico-card-background-color) 0%, 
+    color-mix(in srgb, var(--pico-card-background-color) 90%, #ffd700 10%) 100%);
+}
+
+/* ===== DRAG HANDLE ===== */
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--pico-muted-color);
+  cursor: grab;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.drag-handle:hover {
+  color: var(--pico-primary-500);
+  background: color-mix(in srgb, var(--pico-primary-500) 10%, transparent 90%);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.drag-text {
+  display: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--pico-primary-600);
+}
+
+/* MÓVIL: Mantener diseño original, solo mejorar touch */
+@media screen and (max-width: 768px), 
+       screen and (max-device-width: 768px),
+       (pointer: coarse) {
+  
+  .modern-item-card {
+    touch-action: pan-y !important; /* Permitir scroll vertical, bloquear horizontal */
+  }
+  
+  .drag-handle {
+    padding: 8px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    background: white !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    cursor: grab !important;
+    touch-action: none !important; /* Bloquear scroll solo en el handle */
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+  }
+  
+  .drag-handle svg {
+    display: block !important;
+    width: 16px !important;
+    height: 16px !important;
+    fill: #666 !important;
+    pointer-events: none !important;
+  }
+  
+  .drag-text {
+    display: none !important;
+  }
+}
+
+/* Mejorar drag handle para móviles - CENTRADO PERFECTO */
+@media (hover: none) and (pointer: coarse) {
+  .drag-handle:hover,
+  .drag-handle:active,
+  .drag-handle:focus {
+    background: #e3f2fd !important;
+    border-color: #0056b3 !important;
+    transform: scale(1.05) !important;
+  }
+}
+
+/* ===== MAIN CONTENT ===== */
+.item-main-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--pico-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field-value {
+  color: var(--pico-color);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.item-timestamp {
+  font-size: 0.75rem;
+  color: var(--pico-muted-color);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+/* ===== VOTING SECTION ===== */
+.voting-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.simple-like-btn {
+  transition: all 0.2s ease !important;
+}
+
+.simple-like-btn:hover:not(:disabled) {
+  transform: scale(1.05) !important;
+  background: var(--pico-primary-600) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.simple-like-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.simple-like-btn.has-likes {
+  background: linear-gradient(135deg, var(--pico-primary-500), var(--pico-primary-600)) !important;
+}
+
+/* ===== MOST VOTED BADGE ===== */
+.most-voted-badge {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #8b5a00;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .modern-item-card {
+    padding: 0.75rem;
+    gap: 0.5rem;
+    min-height: 70px;
+    /* Mejorar interacciones táctiles */
+    touch-action: manipulation;
+  }
+  
+  .field-label {
+    font-size: 0.8rem;
+  }
+  
+  .field-value {
+    font-size: 0.9rem;
+  }
+  
+  .voting-section {
+    min-width: 70px;
+  }
+  
+  /* Añadir feedback visual cuando se está arrastrando en móvil */
+  .modern-item-card.dragging {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    border: 2px solid var(--pico-primary-500);
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .drag-handle {
+    align-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .item-main-content {
+    width: 100%;
+  }
+  
+  .voting-section {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    min-width: unset;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--pico-muted-border-color);
+  }
+  
+  .field-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  
+  .field-label {
+    grid-column: 1;
+  }
+  
+  .field-value {
+    grid-column: 2;
+  }
+  
+  .most-voted-badge {
+    position: static;
+    align-self: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modern-item-card {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  .modern-item-card.gold-border {
+    background: linear-gradient(135deg, 
+      var(--pico-card-background-color) 0%, 
+      color-mix(in srgb, var(--pico-card-background-color) 85%, #ffd700 15%) 100%);
+  }
+  
+  .field-label {
+    color: var(--pico-primary-400);
+  }
+}

@@ -1,0 +1,452 @@
+/* TopTastic Visual Enhancements */
+
+/* ===== ANIMACIONES ===== */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== LISTA ITEMS ===== */
+.list-item {
+  animation: slideInUp 0.3s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, 
+    var(--pico-card-background-color) 0%, 
+    color-mix(in srgb, var(--pico-card-background-color) 95%, var(--pico-primary-500) 5%) 100%);
+  border: 1px solid color-mix(in srgb, var(--pico-muted-border-color) 70%, transparent 30%);
+  border-radius: 12px;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+  min-height: 100px; /* Altura mínima para consistencia */
+}
+
+.list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.05);
+  border-color: color-mix(in srgb, var(--pico-primary-500) 30%, var(--pico-muted-border-color) 70%);
+}
+
+.list-item.dragging {
+  transform: rotate(3deg) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* ===== CONTENIDO DEL ITEM ===== */
+.item-content {
+  flex: 1;
+  min-width: 0; /* Permite que el contenido se encoja */
+  overflow: hidden;
+}
+
+.item-field {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item-field-label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--pico-color);
+  flex-shrink: 0;
+}
+
+.item-field-value {
+  color: var(--pico-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.4;
+  max-height: 4.2em; /* Máximo 3 líneas */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  position: relative;
+}
+
+.item-field-value.expanded {
+  max-height: none;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+
+.item-field-value-long::after {
+  content: '...';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--pico-card-background-color);
+  padding-left: 0.5rem;
+}
+
+.item-field-value.expanded::after {
+  display: none;
+}
+
+.expand-button {
+  background: none;
+  border: none;
+  color: var(--pico-primary-500);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  text-decoration: underline;
+  margin-top: 0.25rem;
+}
+
+.expand-button:hover {
+  color: var(--pico-primary-600);
+}
+
+.item-meta {
+  font-size: 0.8rem;
+  color: var(--pico-muted-color);
+  margin-top: 0.5rem;
+}
+
+/* ===== DRAG HANDLE ===== */
+.drag-handle {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  cursor: grab;
+  padding: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  color: var(--pico-muted-color);
+  transition: color 0.2s ease;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-handle:hover {
+  color: var(--pico-primary-500);
+  background-color: color-mix(in srgb, var(--pico-primary-500) 10%, transparent 90%);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  color: var(--pico-primary-600);
+}
+
+/* ===== ÁREA DE VOTACIÓN ===== */
+.voting-area {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1rem;
+  min-width: fit-content;
+}
+
+/* ===== RESPONSIVIDAD ===== */
+@media (max-width: 768px) {
+  .list-item {
+    min-height: 80px;
+  }
+  
+  .voting-area {
+    margin-left: 0.5rem;
+    gap: 0.5rem;
+  }
+  
+  .item-field {
+    margin-bottom: 0.75rem;
+  }
+  
+  .item-field-label {
+    font-size: 0.85rem;
+  }
+  
+  .item-field-value {
+    font-size: 0.9rem;
+    max-height: 3.6em; /* Reducir a 2-3 líneas en móvil */
+  }
+  
+  .drag-handle {
+    display: none !important; /* Ocultar drag handle en móvil */
+  }
+  
+  .list-item > div {
+    margin-left: 0.5rem !important; /* Reducir margen cuando no hay drag handle */
+  }
+}
+
+@media (max-width: 480px) {
+  .list-item {
+    margin-bottom: 0.75rem;
+  }
+  
+  .list-item > div {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .voting-area {
+    align-self: flex-end;
+    margin-left: 0;
+  }
+  
+  .item-field-value {
+    max-height: 2.8em; /* Máximo 2 líneas en pantallas muy pequeñas */
+  }
+}
+
+/* ===== DRAG HANDLE ===== */
+.drag-handle {
+  background: linear-gradient(45deg, 
+    color-mix(in srgb, var(--pico-muted-color) 60%, transparent 40%) 0%,
+    color-mix(in srgb, var(--pico-muted-color) 80%, transparent 20%) 100%);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.drag-handle:hover {
+  background: linear-gradient(45deg, 
+    color-mix(in srgb, var(--pico-primary-500) 60%, transparent 40%) 0%,
+    color-mix(in srgb, var(--pico-primary-500) 80%, transparent 20%) 100%);
+  transform: scale(1.1);
+}
+
+.drag-handle::before {
+  content: '⋮⋮';
+  font-size: 1.2rem;
+  color: var(--pico-muted-color);
+  transition: color 0.2s ease;
+}
+
+.drag-handle:hover::before {
+  color: var(--pico-primary-500);
+}
+
+/* ===== BOTONES LIKE ===== */
+.like-btn {
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--pico-card-background-color) 100%, var(--pico-primary-500) 0%) 0%,
+    color-mix(in srgb, var(--pico-card-background-color) 95%, var(--pico-primary-500) 5%) 100%);
+  border: 2px solid color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent 50%);
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.like-btn:hover {
+  background: linear-gradient(135deg, 
+    var(--pico-primary-100) 0%,
+    var(--pico-primary-200) 100%);
+  border-color: var(--pico-primary-500);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--pico-primary-500) 25%, transparent 75%);
+}
+
+.like-btn:active {
+  animation: pulse 0.3s ease;
+}
+
+.like-btn.liked {
+  background: linear-gradient(135deg, var(--pico-primary-500) 0%, var(--pico-primary-600) 100%);
+  color: white;
+  border-color: var(--pico-primary-600);
+}
+
+/* ===== CROWN PARA MÁS VOTADO ===== */
+.most-voted-badge {
+  background: linear-gradient(135deg, 
+    #ffd700 0%, 
+    #ffed4e  50%, 
+    #ffd700 100%);
+  color: #8b4513;
+  border: 2px solid #ffed4e;
+  box-shadow: 
+    0 2px 8px rgba(255, 215, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  animation: bounceIn 0.5s ease-out;
+}
+
+.most-voted-badge::before {
+  content: '✨';
+  margin-right: 0.25rem;
+}
+
+/* ===== FORMULARIO MEJORADO ===== */
+.add-item-form {
+  background: linear-gradient(135deg, 
+    var(--pico-card-background-color) 0%,
+    color-mix(in srgb, var(--pico-card-background-color) 98%, var(--pico-primary-500) 2%) 100%);
+  border: 2px solid color-mix(in srgb, var(--pico-primary-500) 20%, transparent 80%);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-item-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    var(--pico-primary-500) 0%,
+    var(--pico-primary-600) 50%,
+    var(--pico-primary-500) 100%);
+}
+
+/* ===== BOTÓN PRINCIPAL ===== */
+.btn-primary {
+  background: linear-gradient(135deg, 
+    var(--pico-primary-500) 0%, 
+    var(--pico-primary-600) 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 20px color-mix(in srgb, var(--pico-primary-500) 40%, transparent 60%),
+    0 2px 6px color-mix(in srgb, var(--pico-primary-500) 20%, transparent 80%);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ===== INDICADORES DE AYUDA ===== */
+.help-text {
+  color: color-mix(in srgb, var(--pico-muted-color) 80%, var(--pico-primary-500) 20%);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.help-text::before {
+  content: '💡';
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
+}
+
+/* ===== ESTADOS VACÍOS ===== */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--pico-card-background-color) 100%, transparent 0%) 0%,
+    color-mix(in srgb, var(--pico-card-background-color) 95%, var(--pico-muted-color) 5%) 100%);
+  border: 2px dashed color-mix(in srgb, var(--pico-muted-border-color) 50%, transparent 50%);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.empty-state:hover {
+  border-color: color-mix(in srgb, var(--pico-primary-500) 30%, var(--pico-muted-border-color) 70%);
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--pico-card-background-color) 98%, var(--pico-primary-500) 2%) 0%,
+    color-mix(in srgb, var(--pico-card-background-color) 95%, var(--pico-primary-500) 5%) 100%);
+}
+
+/* ===== HEADER MEJORADO ===== */
+.page-header {
+  background: linear-gradient(135deg, 
+    color-mix(in srgb, var(--pico-primary-500) 5%, transparent 95%) 0%,
+    color-mix(in srgb, var(--pico-primary-500) 10%, transparent 90%) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid color-mix(in srgb, var(--pico-primary-500) 15%, transparent 85%);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .list-item {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .drag-handle {
+    padding: 0.75rem;
+  }
+  
+  .like-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== UTILIDADES ===== */
+.animate-in {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--pico-primary-500) 0%, var(--pico-primary-600) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
