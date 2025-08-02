@@ -32,7 +32,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=https://topback.sergioromero.duckdns.org/
+        - VITE_API_URL=https://topback.sergioromero.duckdns.org/api
     ports:
       - "2999:80"  # Puerto externo 2999, interno sigue siendo 80
     depends_on:

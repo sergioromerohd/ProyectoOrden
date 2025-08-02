@@ -84,7 +84,7 @@ function SortableItem({
     
     setIsLiking(true);
     try {
-      const response = await fetch(`http://localhost:3001/api/items/${id}/like`, {
+      const response = await fetch(`https://topback.sergioromero.duckdns.org/api/items/${id}/like`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
