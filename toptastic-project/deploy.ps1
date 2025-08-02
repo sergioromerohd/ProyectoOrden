@@ -29,9 +29,9 @@ docker-compose -f docker-compose.prod.tmp.yml up -d
 Remove-Item docker-compose.prod.tmp.yml
 
 Write-Host "✅ Despliegue completado!" -ForegroundColor Green
-Write-Host "📍 Frontend: http://$Domain" -ForegroundColor Blue
-Write-Host "📍 Backend: http://$Domain`:3001" -ForegroundColor Blue
-Write-Host "📍 Health: http://$Domain`:3001/health" -ForegroundColor Blue
+Write-Host "📍 Frontend: http://$Domain`:2999" -ForegroundColor Blue
+Write-Host "📍 Backend: http://$Domain`:2998/api" -ForegroundColor Blue
+Write-Host "📍 Health: http://$Domain`:2998/health" -ForegroundColor Blue
 
 Write-Host "📋 Comandos útiles:" -ForegroundColor Yellow
 Write-Host "Ver logs: docker-compose -f docker-compose.prod.yml logs -f"

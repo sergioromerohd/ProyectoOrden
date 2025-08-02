@@ -6,12 +6,12 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - "2998:3001"  # Puerto externo 2998, interno sigue siendo 3001
     environment:
       - NODE_ENV=production
       - PORT=3001
       - DATABASE_PATH=./database/database.db
-      - FRONTEND_URL=https://tu-dominio.com  # 🔴 CAMBIAR POR TU DOMINIO
+      - FRONTEND_URL=https://toptastic.sergioromero.duckdns.org/  # 🔴 CAMBIAR POR TU DOMINIO
     volumes:
       - database_data:/app/database
     healthcheck:
@@ -32,9 +32,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_URL=https://tu-dominio.com:3001/api  # 🔴 CAMBIAR POR TU DOMINIO
+        - VITE_API_URL=https://topback.sergioromero.duckdns.org/
     ports:
-      - "80:80"
+      - "2999:80"  # Puerto externo 2999, interno sigue siendo 80
     depends_on:
       backend:
         condition: service_healthy

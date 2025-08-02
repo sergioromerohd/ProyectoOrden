@@ -41,9 +41,9 @@ docker-compose -f docker-compose.prod.tmp.yml up -d
 rm docker-compose.prod.tmp.yml
 
 echo -e "${GREEN}✅ Despliegue completado!${NC}"
-echo -e "${BLUE}📍 Frontend: http://${DOMAIN}${NC}"
-echo -e "${BLUE}📍 Backend: http://${DOMAIN}:3001${NC}"
-echo -e "${BLUE}📍 Health: http://${DOMAIN}:3001/health${NC}"
+echo -e "${BLUE}📍 Frontend: http://${DOMAIN}:2999${NC}"
+echo -e "${BLUE}📍 Backend: http://${DOMAIN}:2998/api${NC}"
+echo -e "${BLUE}📍 Health: http://${DOMAIN}:2998/health${NC}"
 
 echo -e "${YELLOW}📋 Comandos útiles:${NC}"
 echo "Ver logs: docker-compose -f docker-compose.prod.yml logs -f"
